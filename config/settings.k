@@ -1,13 +1,20 @@
-base_settings = require('../core/base_settings')
-for name, value in base_settings
-   exports[name] = value
+settings = require('../core/base_settings')
 
 /* These settings represent defaults that can be overridden as needed.
-exports.VIEWSDIR = "#{exports.APPROOT}/views"
-exports.STATICDIR = "#{exports.APPROOT}/public"
+settings.VIEWSDIR = "#{settings.APPROOT}/views"
+settings.STATICDIR = "#{settings.APPROOT}/public"
 //*/
 
+// Connection info
+settings.HOST = :localhost
+settings.PORT = 7000
+
+// General settings
+settings.APPNAME = "My Node App"
+settings.APPTITLE = settings.APPNAME
+
 // Options for fugue. Only used in production or test
-exports.PORT = 7000
-exports.WORKERS = 1
-exports.HOST = null
+settings.WORKERS = 2
+
+
+module.exports = settings
