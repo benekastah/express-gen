@@ -9,4 +9,4 @@ class %controllerClassName% extends ApplicationController {
    }
 }
 
-module.exports = new %controllerName%()
+module.exports = new %controllerClassName%()

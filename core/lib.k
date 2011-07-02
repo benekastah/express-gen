@@ -1,3 +1,7 @@
+path = require :path
+fs = require :fs
+settings = require :settings
+sys = require :sys
 
 exports.camelCaseToLower = (string) -> {
    ret = '';
@@ -25,6 +29,13 @@ exports.lowerCaseToCamel = (string, capitalizeFirstLetter) -> {
    return ret
 }
 
+exports.switchCase = (string, capitalizeFirstLetter) -> {
+   if string.toLowerCase() === string
+      return exports.lowerCaseToCamel string, capitalizeFirstLetter
+   else
+      return exports.camelCaseToLower string
+}
+
 exports.GenTemplate = class GenTemplate {
    @initialize = (config) -> {
       @text = config.text
@@ -46,5 +57,50 @@ exports.GenTemplate = class GenTemplate {
    
    @toString = -> {
       @text
+   }
+}
+
+exports.writeFile = (file, data, _return) -> {
+   file = "#{settings.APPROOT}/#{file}"
+   err, exists = path.exists! file
+   if (err) { _return err; return }
+   
+   if not exists {
+      wStream = fs.createWriteStream file, { mode: 0755 }
+      wStream.addListener :error, (err) -> {
+         _return err
+      }
+      
+      if wStream.write(data)
+         _return true
+   }
+}
+
+var array = []
+class ArgumentList extends array {
+   @initialize = (args, start) -> {
+      if start and start > 0
+         args = args.splice start
+      
+      @named = {}
+      for arg, i of args {
+         newArg = new Argument arg
+         if newArg.value !== undefined
+            @named[newArg.name] = newArg.value;
+         else
+            @push(newArg.name)
+      }
+   }
+}
+exports.ArgumentList = ArgumentList
+
+class Argument {
+   @initialize = (str) -> {
+      if (typeof str !== :string)
+         return;
+         
+      split = str.split ':'
+      @name = split[0]
+      @value = split[1]
    }
 }

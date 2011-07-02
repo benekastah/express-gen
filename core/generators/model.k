@@ -6,8 +6,8 @@ lib = require "../lib"
 module.exports = (args) -> {
    text = fs.readFileSync "core/templates/model.template", :utf8
    
-   modelClassName = args[1].name
-   modelName = lib.camelCaseToLower(modelClassName)
+   modelClassName = lib.lowerCaseToCamel args[1], true
+   modelName = lib.camelCaseToLower modelClassName
    
    template = new lib.GenTemplate { 
       text: text,
@@ -18,15 +18,10 @@ module.exports = (args) -> {
    }
    
    file = "mvc/models/#{modelName}_model.k"
-   exists = path.existsSync file
-   
-   if not exists {
-      wStream = fs.createWriteStream file, { mode: 0755 }
-      wStream.addListener :error, (err) -> {
-         throw err
-      }
-      
-      if wStream.write(template.render())
-         sys.puts "Created #{file}"
-   }
+   sys.puts "Creating file #{file}..."
+   result = lib.writeFile! file, template.render()
+   if result is true
+      sys.puts "Done."
+   else
+      console.error "Error writing to file: #{result}"
 }

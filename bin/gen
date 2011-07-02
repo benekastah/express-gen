@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
-require("kaffeine");
 
-var log = console.log;
-var clArgs = new ArgumentList();
+require("kaffeine");
+var lib = require("../core/lib"),
+sys = require("sys");
+
+var clArgs = new lib.ArgumentList(process.argv, 2);
 var command = clArgs[0].name;
 
 generate(command);
@@ -14,18 +16,3 @@ function generate(type) {
    require('../core/generators/' + type).call(undefined, clArgs);
 }
 
-function Argument(str) {
-   var split = str.split(':');
-   this.name = split[0];
-   this.value = split[1];
-}
-
-function ArgumentList() {
-   var clArgs = process.argv.splice(2);
-   for (var i=0, len=clArgs.length; i<len; i++) {
-      var val = clArgs[i];
-      this[i] = new Argument(val);
-   }
-}
-ArgumentList.prototype = [];
-ArgumentList.prototype.constructor = ArgumentList;
