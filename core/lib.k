@@ -2,6 +2,7 @@ path = require :path
 fs = require :fs
 settings = require :settings
 sys = require :sys
+exec = require('child_process').exec
 
 exports.camelCaseToLower = (string) -> {
    ret = '';
@@ -102,5 +103,35 @@ class Argument {
       split = str.split ':'
       @name = split[0]
       @value = split[1]
+   }
+}
+
+exports.git = {
+   clone: (url, targetDir = '', _return) -> {
+      command = "git clone #{url} #{targetDir}"
+      output = exports.bash.exec! command
+      console.log output || ''
+      _return()
+   },
+   
+   checkout: (item, _return) -> {
+      command = "git checkout #{item}"
+      output = exports.bash.exec! command
+      console.log output || ''
+      _return()
+   },
+   
+   exec: (command, _return) -> {
+      out = exports.bash.exec! "git #{command}"
+      _return out
+   }
+}
+
+exports.bash = {
+   exec: (command, _return) -> {
+      err, stdout, stderr = exec! command
+      if (stderr) console.error stderr
+      if (err) console.error err
+      _return stdout
    }
 }

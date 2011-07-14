@@ -13,8 +13,12 @@ settings.PORT = 7000
 settings.APPNAME = "My Node App"
 settings.APPTITLE = settings.APPNAME
 
-// Options for fugue. Only used in production or test
+// Fugue stuff. Only used in production or test.
 settings.WORKERS = 2
 
+// Additional project requirements
+settings.DEPENDENCIES = [
+  //:qux
+]
 
 module.exports = settings
