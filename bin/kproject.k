@@ -27,7 +27,7 @@ checkoutItem = project[1];
 function getCheckoutItem(item = 'release') {
    process.chdir projectDir
    
-   if /^\d+\.\d+\.\d+\-*\w*/.test checkoutItem {
+   if /^v\d+\.\d+\.\d+\-*\w*/.test checkoutItem {
       return "tags/v#{item}"
    } else if item !== :master && item !== :stable {
       out = lib.git.exec! "tag -l"
@@ -48,6 +48,6 @@ function getCheckoutItem(item = 'release') {
       }
       return "tags/#{latest.text}"
    } else
-      item
+      return item
 }
 
