@@ -18,7 +18,8 @@ checkoutItem = project[1];
   sys.puts checkoutItem
   
   lib.git.checkout! checkoutItem
-  lib.git.exec "remote add #{meInfo.name} #{gitUrl}"
+  remote = lib.git.exec! "remote add #{meInfo.name} #{gitUrl}"
+  sys.puts remote
   
   bundle = lib.bash.exec! "jake bundle"
   sys.puts bundle
