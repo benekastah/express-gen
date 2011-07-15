@@ -53,11 +53,15 @@ task('bundle', function (config) {
   });
 });
 
-desc("Update " + meInfo.name + " to newer versions or patch-levels.");
-task('update:' + meInfo.name, function () {
-  lib.git.pull(meInfo.name, function () {
-    meInfo = require("./core/me.info");
-    lib.git.exec("remote add " + meInfo.projectName + " " + meInfo.gitUrl);
+desc("Update " + meInfo.name + " or dependencies to newer versions or patch-levels.");
+task('update', function () {
+  lib.git.pull(meInfo.name, function (what) {
+    switch (what) {
+      case "project":
+        meInfo = require("./core/me.info");
+        lib.git.exec("remote add " + meInfo.projectName + " " + meInfo.gitUrl);
+        break;
+    }
   });
 });
 
