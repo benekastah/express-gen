@@ -3,6 +3,7 @@ fs = require :fs
 settings = require :settings
 sys = require :sys
 exec = require('child_process').exec
+emptyFn = -> {}
 
 exports.camelCaseToLower = (string) -> {
    ret = '';
@@ -107,42 +108,42 @@ class Argument {
 }
 
 exports.git = {
-   clone: (url, targetDir = '', _return = -> {}) -> {
+   clone: (url, targetDir = '', _return = emptyFn) -> {
       command = "clone #{url} #{targetDir}"
       output = this.exec! command
       console.log output || ''
       _return(output)
    },
    
-   checkout: (item, _return = -> {}) -> {
+   checkout: (item, _return = emptyFn) -> {
       command = "checkout #{item}"
       output = this.exec! command
       console.log output || ''
       _return(output)
    },
 
-   push: (to = '', at = '') -> {
+   push: (to = '', at = '', _return = emptyFn) -> {
       command = "push #{to} #{at}".trim()
       output = this.exec! command
       console.log output || ''
       _return(output)
    },
 
-   pull: (from = '') -> {
+   pull: (from = '', _return = emptyFn) -> {
       command = "pull #{from}".trim()
       output = this.exec! command
       console.log output || ''
       _return(output)
    },
    
-   exec: (command, _return = -> {}) -> {
+   exec: (command, _return = emptyFn) -> {
       out = exports.bash.exec! "git #{command}"
       _return out
    },
 }
 
 exports.bash = {
-   exec: (command, _return = -> {}) -> {
+   exec: (command, _return = emptyFn) -> {
       err, stdout, stderr = exec! command
       if (stderr) console.error stderr
       if (err) console.error err
