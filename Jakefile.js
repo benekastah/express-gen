@@ -1,6 +1,7 @@
 require('kaffeine');
 var lib = require("./core/lib"),
-npm = require("npm");
+npm = require("npm"),
+meInfo = require("./core/me.info");
 
 desc("Initializes a new project");
 task('bundle', function (config) {
@@ -49,5 +50,13 @@ task('bundle', function (config) {
         if (data) console.log(data);
       });
     }
+  });
+});
+
+desc("Update " + meInfo.name + " to newer versions or patch-levels.");
+task('update:' + meInfo.name, function () {
+  lib.git.pull(meInfo.name, function () {
+    meInfo = require("./core/me.info");
+    lib.git.exec("remote add " + meInfo.name + " " + gitUrl);
   });
 });

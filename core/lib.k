@@ -107,28 +107,42 @@ class Argument {
 }
 
 exports.git = {
-   clone: (url, targetDir = '', _return) -> {
-      command = "git clone #{url} #{targetDir}"
-      output = exports.bash.exec! command
+   clone: (url, targetDir = '', _return = -> {}) -> {
+      command = "clone #{url} #{targetDir}"
+      output = this.exec! command
       console.log output || ''
-      _return()
+      _return(output)
    },
    
-   checkout: (item, _return) -> {
-      command = "git checkout #{item}"
-      output = exports.bash.exec! command
+   checkout: (item, _return = -> {}) -> {
+      command = "checkout #{item}"
+      output = this.exec! command
       console.log output || ''
-      _return()
+      _return(output)
+   },
+
+   push: (to = '', at = '') -> {
+      command = "push #{to} #{at}".trim()
+      output = this.exec! command
+      console.log output || ''
+      _return(output)
+   },
+
+   pull: (from = '') -> {
+      command = "pull #{from}".trim()
+      output = this.exec! command
+      console.log output || ''
+      _return(output)
    },
    
-   exec: (command, _return) -> {
+   exec: (command, _return = -> {}) -> {
       out = exports.bash.exec! "git #{command}"
       _return out
-   }
+   },
 }
 
 exports.bash = {
-   exec: (command, _return) -> {
+   exec: (command, _return = -> {}) -> {
       err, stdout, stderr = exec! command
       if (stderr) console.error stderr
       if (err) console.error err

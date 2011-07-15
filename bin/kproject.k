@@ -2,6 +2,7 @@
 sys = require :sys
 lib = require '../core/lib'
 util = require :util
+meInfo = require '../core/me.info'
 
 cwd = process.cwd()
 gitUrl = "git@github.com:benekastah/express-gen.git"
@@ -17,6 +18,7 @@ checkoutItem = project[1];
   sys.puts checkoutItem
   
   lib.git.checkout! checkoutItem
+  lib.git.exec "remote add #{meInfo.name} #{gitUrl}"
   
   bundle = lib.bash.exec! "jake bundle"
   sys.puts bundle

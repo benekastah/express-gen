@@ -1,4 +1,5 @@
 base_settings = {}
+
 base_settings.APPROOT = process.cwd().replace /\/config$/, ''
 base_settings.VIEWSDIR = "#{base_settings.APPROOT}/views"
 base_settings.STATICDIR = "#{base_settings.APPROOT}/public"
