@@ -18,8 +18,6 @@ checkoutItem = project[1];
   sys.puts checkoutItem
   
   lib.git.checkout! checkoutItem
-  console.log(meInfo.name)
-  console.log(gitUrl)
   remote = lib.git.exec! "remote add #{meInfo.projectName} #{gitUrl}"
   sys.puts remote
   

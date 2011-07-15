@@ -61,7 +61,7 @@ task('update:' + meInfo.name, function () {
   });
 });
 
-desk("test task");
+desc("test task");
 task("test", function () {
   console.log("here!");
   console.log(arguments);
