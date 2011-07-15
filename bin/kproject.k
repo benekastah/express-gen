@@ -5,7 +5,7 @@ util = require :util
 meInfo = require '../core/me.info'
 
 cwd = process.cwd()
-gitUrl = "git@github.com:benekastah/express-gen.git"
+gitUrl = meInfo.gitUrl
 args = new lib.ArgumentList process.argv, 2
 
 project = args[0].split '@'
@@ -18,7 +18,9 @@ checkoutItem = project[1];
   sys.puts checkoutItem
   
   lib.git.checkout! checkoutItem
-  remote = lib.git.exec! "remote add #{meInfo.name} #{gitUrl}"
+  console.log(meInfo.name)
+  console.log(gitUrl)
+  remote = lib.git.exec! "remote add #{meInfo.projectName} #{gitUrl}"
   sys.puts remote
   
   bundle = lib.bash.exec! "jake bundle"

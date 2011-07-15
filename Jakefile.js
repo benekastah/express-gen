@@ -57,6 +57,12 @@ desc("Update " + meInfo.name + " to newer versions or patch-levels.");
 task('update:' + meInfo.name, function () {
   lib.git.pull(meInfo.name, function () {
     meInfo = require("./core/me.info");
-    lib.git.exec("remote add " + meInfo.name + " " + gitUrl);
+    lib.git.exec("remote add " + meInfo.projectName + " " + meInfo.gitUrl);
   });
 });
+
+desk("test task");
+task("test", function () {
+  console.log("here!");
+  console.log(arguments);
+})
