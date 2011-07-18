@@ -45,9 +45,9 @@ exports.GenTemplate = class GenTemplate {
    }
    
    @render = -> {
-      for item of @replacements {
-         regExp = new RegExp "%#{item[0]}%", "g"
-         @text = @text.replace(regExp, item[1])
+      for key, item from @replacements {
+         regExp = new RegExp "%#{key}%", "g"
+         @text = @text.replace(regExp, item)
       }
       @text
    }
@@ -108,7 +108,7 @@ class Argument {
 }
 
 exports.git = {
-   clone: (url, targetDir = '', _return = emptyFn) -> {
+   clone: (url, targetDir = '', _return = emptyFngit ) -> {
       command = "clone #{url} #{targetDir}"
       output = this.exec! command
       console.log output || ''

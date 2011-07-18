@@ -11,10 +11,10 @@ module.exports = (args) -> {
    
    template = new lib.GenTemplate { 
       text: text,
-      replacements: [
-         [:modelClassName, modelClassName],
-         [:modelName, modelName]
-      ]
+      replacements: {
+         modelClassName: modelClassName,
+         modelName: modelName,
+      }
    }
    
    file = "mvc/models/#{modelName}_model.k"

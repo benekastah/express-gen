@@ -4,20 +4,18 @@ path = require :path
 lib = require "../lib"
 
 module.exports = (args) -> {
-   text = fs.readFileSync "core/templates/controller.template", :utf8
-   
-   controllerClassName = lib.lowerCaseToCamel args[1], true
-   modelName = lib.camelCaseToLower(controllerClassName)
+   text = fs.readFileSync "core/templates/update.template", :utf8
+
+   version = args[0];
    
    template = new lib.GenTemplate { 
       text: text,
       replacements: {
-         controllerClassName: controllerClassName
-         modelName: modelName
+         version: version
       }
    }
    
-   file = "mvc/controllers/#{modelName}_controller.k"
+   file = "mvc/models/update.k"
    sys.puts "Creating file #{file}..."
    result = lib.writeFile! file, template.render()
    if result is true
