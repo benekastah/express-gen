@@ -62,6 +62,26 @@ exports.GenTemplate = class GenTemplate {
    }
 }
 
+exports.render = (template, replacements, _return) -> {
+  err, text = fs.readFile! template, :utf8
+  if err and _return, _return err, null
+  t = new exports.GenTemplate {
+    text: text,
+    replacements: replacements || {}
+  }
+  if _return
+    _return null, t.render()
+}
+
+exports.renderToFile = (template, targetFile, replacements, _return) -> {
+  err, fileText = exports.render! template, replacements
+  if err and _return, _return err
+
+  err = lib.writeFile! targetFile, fileText
+  if _return
+    _return err
+}
+
 exports.writeFile = (file, data, _return) -> {
    file = "#{settings.APPROOT}/#{file}"
    err, exists = path.exists! file

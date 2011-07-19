@@ -23,6 +23,8 @@ checkoutItem = project[1];
   
   bundle = lib.bash.exec! "jake bundle"
   sys.puts bundle
+
+  setUpFiles()
 }
 
 //-----------------------------------------------------------------------------
@@ -30,8 +32,8 @@ checkoutItem = project[1];
 function getCheckoutItem(item = 'release') {
    process.chdir projectDir
    
-   if /^v\d+\.\d+\.\d+\-*\w*/.test checkoutItem {
-      return "tags/v#{item}"
+   if /^v?\d+\.\d+\.\d+\-*\w*/.test checkoutItem {
+      return "tags/v#{item.replace /^v/, ''}"
    } else if item !== :master && item !== :stable {
       out = lib.git.exec! "tag -l"
       tags = out.split "\n"
@@ -54,3 +56,32 @@ function getCheckoutItem(item = 'release') {
       return item
 }
 
+function setUpFiles() {
+
+  makeFileFromTemplate "settings.k.template", :config, {
+    libraryName: meInfo.projectName,
+    version: checkoutItem,
+  }
+
+
+  //----------------------------------------------------------------------------
+
+  function makeFileFromTemplate(templateName, targetPath, replacements, _return) {
+    template = getTemplatePath templateName
+    target = getTargetPath targetPath, templateName
+
+    lib.renderToFile! template, target, replacements
+    if _return
+      _return.apply arguments
+  }
+
+  function getTemplatePath(templateName) {
+    "#{projectDir}/core/templates/#{templateName}"
+  }
+
+  function getTargetPath(path, templateName) {
+    path = path.replace /\//, ''
+    targetName = templateName.replace /\.template/, ''
+    "#{projectDir}/#{path}/#{targetName}"
+  }
+}

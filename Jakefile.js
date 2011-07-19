@@ -2,6 +2,7 @@ require('kaffeine');
 var lib = require("./core/lib"),
 npm = require("npm"),
 meInfo = require("./core/me.info");
+settings = require("settings");
 
 desc("Initializes a new project");
 task('bundle', function (config) {
@@ -55,7 +56,7 @@ task('bundle', function (config) {
 
 desc("Update " + meInfo.name + " or dependencies to newer versions or patch-levels.");
 task('update', function () {
-  lib.git.pull(meInfo.name, function (what) {
+  lib.git.pull(meInfo.name + " " + settings.UPDATEVERSION, function (what) {
     switch (what) {
       case "project":
         meInfo = require("./core/me.info");
