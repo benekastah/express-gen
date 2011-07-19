@@ -66,8 +66,9 @@ exports.GenTemplate = class GenTemplate {
 
 exports.render = (template, replacements, _return) -> {
   err, text = fs.readFile! template, :utf8
-  if err and _return { 
-    _return err, null
+  if err {
+    console.log err
+    if _return, _return err, null
     return
   }
   console.log text
@@ -81,12 +82,14 @@ exports.render = (template, replacements, _return) -> {
 
 exports.renderToFile = (template, targetFile, replacements, _return) -> {
   err, fileText = exports.render! template, replacements
-  if err and _return {
-    _return err
+  if err {
+    console.log err
+    if _return, _return err
     return
   }
 
   err = exports.writeFile! targetFile, fileText
+  console.log err
   if _return
     _return err
 }
@@ -182,16 +185,10 @@ exports.bash = {
 
 exports.setUpInitialFiles = (config) -> {
 
-  {
-    err = makeFileFromTemplate! "settings.k.template", :config, {
-      libraryName: meInfo.projectName,
-      version: config[meInfo.projectName + "-version"],
-      appName: config.appName,
-    }
-    if err {
-      console.error err
-      throw err
-    }
+  err = makeFileFromTemplate "settings.k.template", :config, {
+    libraryName: meInfo.projectName,
+    version: config[meInfo.projectName + "-version"],
+    appName: config.appName,
   }
 
 
