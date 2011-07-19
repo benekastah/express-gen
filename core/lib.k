@@ -202,4 +202,6 @@ exports.setUpInitialFiles = (config) -> {
       "#{settings.APPROOT}/#{path}/#{targetName}"
     }
   }
+
+  return
 }
