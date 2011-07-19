@@ -4,7 +4,7 @@ path = require :path
 lib = require "../lib"
 
 module.exports = (args) -> {
-  template = "core/templates/model.template"
+  template = "core/templates/model.k.template"
   targetFile = "mvc/models/#{modelName}_model.k"
 
   sys.puts "Creating file #{targetFile}..."
