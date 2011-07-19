@@ -8,8 +8,7 @@ desc("Initializes a new project");
 task('bundle', function (config) {
   config = config || {};
   
-  var settings = require('settings'),
-  d, loc = [], glob = [];
+  var d, loc = [], glob = [];
 
   d = settings.BASE_DEPENDENCIES.concat(settings.DEPENDENCIES);
 

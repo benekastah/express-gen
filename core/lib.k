@@ -173,11 +173,12 @@ exports.bash = {
    }
 }
 
-exports.setUpInitialFiles() {
+exports.setUpInitialFiles(config) {
 
   makeFileFromTemplate "settings.k.template", :config, {
     libraryName: meInfo.projectName,
     version: config[meInfo.projectName + "-version"],
+    appName: config.appName,
   }
 
 
