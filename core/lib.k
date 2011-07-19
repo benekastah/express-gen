@@ -201,6 +201,8 @@ exports.setUpInitialFiles = (config) -> {
       targetName = templateName.replace /\.template/, ''
       "#{settings.APPROOT}/#{path}/#{targetName}"
     }
+
+    return
   }
 
   return
