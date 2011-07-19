@@ -54,9 +54,9 @@ task('bundle', function (config) {
   });
 });
 
-desc("Update " + meInfo.name + " or dependencies to newer versions or patch-levels.");
-task('update', function () {
-  lib.git.pull(meInfo.name + " " + settings.UPDATEVERSION, function (what) {
+desc("Update " + meInfo.projectName + " or dependencies to newer versions or patch-levels.");
+task('update', function (what) {
+  lib.git.pull(meInfo.projectName + " " + settings.UPDATEVERSION, function (what) {
     switch (what) {
       case "project":
         meInfo = require("./core/me.info");
@@ -65,6 +65,41 @@ task('update', function () {
     }
   });
 });
+
+desc("Set up project after creating a project or updating " + meInfo.projectName + ".");
+task("setup", function () {
+  setUpFiles()
+  
+  function setUpFiles() {
+
+    makeFileFromTemplate "settings.k.template", :config, {
+      libraryName: meInfo.projectName,
+      version: process.env[meInfo.projectName.replace('-', '_') + "_version"],
+    }
+
+
+    //----------------------------------------------------------------------------
+
+    function makeFileFromTemplate(templateName, targetPath, replacements, _return) {
+      template = getTemplatePath templateName
+      target = getTargetPath targetPath, templateName
+
+      lib.renderToFile! template, target, replacements
+      if _return
+        _return.apply arguments
+    }
+
+    function getTemplatePath(templateName) {
+      "#{settings.APPROOT}/core/templates/#{templateName}"
+    }
+
+    function getTargetPath(path, templateName) {
+      path = path.replace /\//, ''
+      targetName = templateName.replace /\.template/, ''
+      "#{settings.APPROOT}/#{path}/#{targetName}"
+    }
+  }
+})
 
 desc("test task");
 task("test", function () {
