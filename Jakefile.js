@@ -53,7 +53,7 @@ task('bundle', function (config) {
   });
 });
 
-desc("Update " + meInfo.projectName + " or dependencies to newer versions or patch-levels.");
+desc("Updates " + meInfo.projectName + " or dependencies to newer versions or patch-levels.");
 task('update', function (what) {
   lib.git.pull(meInfo.projectName + " " + settings.UPDATEVERSION, function (what) {
     switch (what) {
@@ -65,13 +65,32 @@ task('update', function (what) {
   });
 });
 
-desc("Set up project after creating a project or updating " + meInfo.projectName + ".");
-task("setup", function (config) {
+desc("Sets up project after creating a project or updating " + meInfo.projectName + ".");
+task("setup", function () {
+  var config = getNamedArgs(arguments);
   lib.setUpInitialFiles(config);
-})
+});
 
-desc("test task");
+desc("Tests to make sure jake is properly working for this project");
 task("test", function () {
   console.log("here!");
   console.log(arguments);
-})
+});
+
+
+
+//------------------------------------------------------------------------------
+
+function getNamedArgs(args) {
+  var ret = {};
+  for (var i=0, len=args.length; i<len; i++) {
+    var arg = args[i];
+    if (/\w+:\w+/.test(arg)) {
+      arg = arg.split(":");
+      name = arg[0];
+      value = arg[1];
+      ret[name] = value;
+    }
+  }
+  return ret;
+}
