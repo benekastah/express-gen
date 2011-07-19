@@ -187,7 +187,10 @@ exports.setUpInitialFiles = (config) -> {
     version: config[meInfo.projectName + "-version"],
     appName: config.appName,
   }
-  if err, throw err
+  if err {
+    console.error err
+    throw err
+  }
 
 
   //--------------------------------------------------------------------------
