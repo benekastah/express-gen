@@ -67,6 +67,7 @@ exports.GenTemplate = class GenTemplate {
 exports.render = (template, replacements, _return) -> {
   err, text = fs.readFile! template, :utf8
   if err and _return, _return err, null
+  console.log text
   t = new exports.GenTemplate {
     text: text,
     replacements: replacements || {}
