@@ -193,13 +193,13 @@ exports.setUpInitialFiles = (config) -> {
       _return.apply arguments
 
     function getTemplatePath(templateName) {
-      "#{settings.APPROOT}/core/templates/#{templateName}"
+      return "#{settings.APPROOT}/core/templates/#{templateName}"
     }
 
     function getTargetPath(path, templateName) {
       path = path.replace /\//, ''
-      targetName = templateName.replace /\.template/, ''
-      "#{settings.APPROOT}/#{path}/#{targetName}"
+      targetName = templateName.replace /\.template/, '';
+      return "#{settings.APPROOT}/#{path}/#{targetName}"
     }
 
     return
