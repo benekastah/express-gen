@@ -188,7 +188,7 @@ exports.setUpInitialFiles = (config) -> {
     template = getTemplatePath templateName
     target = getTargetPath targetPath, templateName
 
-    lib.renderToFile! template, target, replacements
+    exports.renderToFile! template, target, replacements
     if _return
       _return.apply arguments
   }
