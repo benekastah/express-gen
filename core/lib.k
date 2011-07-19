@@ -182,11 +182,12 @@ exports.bash = {
 
 exports.setUpInitialFiles = (config) -> {
 
-  makeFileFromTemplate "settings.k.template", :config, {
+  err = makeFileFromTemplate! "settings.k.template", :config, {
     libraryName: meInfo.projectName,
     version: config[meInfo.projectName + "-version"],
     appName: config.appName,
   }
+  if err, throw err
 
 
   //--------------------------------------------------------------------------
