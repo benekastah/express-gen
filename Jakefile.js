@@ -67,18 +67,18 @@ task('update', function (what) {
 });
 
 desc("Set up project after creating a project or updating " + meInfo.projectName + ".");
-task("setup", function () {
-  setUpFiles()
+task("setup", function (config) {
+  setUpFiles();
   
   function setUpFiles() {
 
     makeFileFromTemplate "settings.k.template", :config, {
       libraryName: meInfo.projectName,
-      version: process.env[meInfo.projectName.replace('-', '_') + "_version"],
+      version: config[meInfo.projectName + "-version"],
     }
 
 
-    //----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 
     function makeFileFromTemplate(templateName, targetPath, replacements, _return) {
       template = getTemplatePath templateName

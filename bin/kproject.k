@@ -24,7 +24,9 @@ checkoutItem = project[1];
   bundle = lib.bash.exec! "jake bundle"
   sys.puts bundle
 
-  setUpFiles()
+  versionKey = meInfo.projectName + "_version"
+  setup = lib.bash.exec! "jake setup[{\"#{versionKey}\" : \"#{checkoutItem}\"}]"
+  sys.puts setup
 }
 
 //-----------------------------------------------------------------------------
@@ -54,34 +56,4 @@ function getCheckoutItem(item = 'release') {
       return "tags/#{latest.text}"
    } else
       return item
-}
-
-function setUpFiles() {
-
-  makeFileFromTemplate "settings.k.template", :config, {
-    libraryName: meInfo.projectName,
-    version: checkoutItem,
-  }
-
-
-  //----------------------------------------------------------------------------
-
-  function makeFileFromTemplate(templateName, targetPath, replacements, _return) {
-    template = getTemplatePath templateName
-    target = getTargetPath targetPath, templateName
-
-    lib.renderToFile! template, target, replacements
-    if _return
-      _return.apply arguments
-  }
-
-  function getTemplatePath(templateName) {
-    "#{projectDir}/core/templates/#{templateName}"
-  }
-
-  function getTargetPath(path, templateName) {
-    path = path.replace /\//, ''
-    targetName = templateName.replace /\.template/, ''
-    "#{projectDir}/#{path}/#{targetName}"
-  }
 }
