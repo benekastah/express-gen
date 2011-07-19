@@ -10,7 +10,7 @@ settings.HOST = :localhost
 settings.PORT = 7000
 
 // General settings
-settings.APPNAME = "My Node App"
+settings.APPNAME = "%appName%"
 settings.APPTITLE = settings.APPNAME
 
 // Fugue stuff. Only used in production or test.
