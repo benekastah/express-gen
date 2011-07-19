@@ -25,13 +25,10 @@ checkoutItem = project[1];
   sys.puts bundle
 
   versionKey = meInfo.projectName + "_version"
-  setup = lib.bash.exec! "jake setup[{\"#{versionKey}\" : \"#{checkoutItem}\"}]"
-  sys.puts setup
-
   fileConfig = {}
   fileConfig[versionKey] = checkoutItem
   fileConfig.appName = project
-  lib.setUpInitialFiles()
+  lib.setUpInitialFiles(fileConfig)
 }
 
 //-----------------------------------------------------------------------------

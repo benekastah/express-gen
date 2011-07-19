@@ -191,18 +191,16 @@ exports.setUpInitialFiles = (config) -> {
     lib.renderToFile! template, target, replacements
     if _return
       _return.apply arguments
+  }
 
-    function getTemplatePath(templateName) {
-      return "#{settings.APPROOT}/core/templates/#{templateName}"
-    }
+  function getTemplatePath(templateName) {
+    return "#{settings.APPROOT}/core/templates/#{templateName}"
+  }
 
-    function getTargetPath(path, templateName) {
-      path = path.replace /\//, ''
-      targetName = templateName.replace /\.template/, '';
-      return "#{settings.APPROOT}/#{path}/#{targetName}"
-    }
-
-    return
+  function getTargetPath(path, templateName) {
+    path = path.replace /\//, ''
+    targetName = templateName.replace /\.template/, '';
+    return "#{settings.APPROOT}/#{path}/#{targetName}"
   }
 
   return
