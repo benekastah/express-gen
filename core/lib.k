@@ -173,7 +173,7 @@ exports.bash = {
    }
 }
 
-exports.setUpInitialFiles(config) {
+exports.setUpInitialFiles = (config) -> {
 
   makeFileFromTemplate "settings.k.template", :config, {
     libraryName: meInfo.projectName,
