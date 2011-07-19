@@ -79,7 +79,7 @@ exports.renderToFile = (template, targetFile, replacements, _return) -> {
   err, fileText = exports.render! template, replacements
   if err and _return, _return err
 
-  err = lib.writeFile! targetFile, fileText
+  err = exports.writeFile! targetFile, fileText
   if _return
     _return err
 }
