@@ -3,6 +3,8 @@ fs = require :fs
 settings = require :settings
 sys = require :sys
 exec = require('child_process').exec
+meInfo = require "./me.info"
+
 emptyFn = -> {}
 
 exports.camelCaseToLower = (string) -> {
@@ -169,4 +171,34 @@ exports.bash = {
       if (err) console.error err
       _return stdout
    }
+}
+
+exports.setUpInitialFiles() {
+
+  makeFileFromTemplate "settings.k.template", :config, {
+    libraryName: meInfo.projectName,
+    version: config[meInfo.projectName + "-version"],
+  }
+
+
+  //--------------------------------------------------------------------------
+
+  function makeFileFromTemplate(templateName, targetPath, replacements, _return) {
+    template = getTemplatePath templateName
+    target = getTargetPath targetPath, templateName
+
+    lib.renderToFile! template, target, replacements
+    if _return
+      _return.apply arguments
+  }
+
+  function getTemplatePath(templateName) {
+    "#{settings.APPROOT}/core/templates/#{templateName}"
+  }
+
+  function getTargetPath(path, templateName) {
+    path = path.replace /\//, ''
+    targetName = templateName.replace /\.template/, ''
+    "#{settings.APPROOT}/#{path}/#{targetName}"
+  }
 }
