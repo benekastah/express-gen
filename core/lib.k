@@ -66,7 +66,10 @@ exports.GenTemplate = class GenTemplate {
 
 exports.render = (template, replacements, _return) -> {
   err, text = fs.readFile! template, :utf8
-  if err and _return, _return err, null
+  if err and _return { 
+    _return err, null
+    return
+  }
   console.log text
   t = new exports.GenTemplate {
     text: text,
@@ -78,7 +81,10 @@ exports.render = (template, replacements, _return) -> {
 
 exports.renderToFile = (template, targetFile, replacements, _return) -> {
   err, fileText = exports.render! template, replacements
-  if err and _return, _return err
+  if err and _return {
+    _return err
+    return
+  }
 
   err = exports.writeFile! targetFile, fileText
   if _return
