@@ -11,7 +11,7 @@ settings.STATICDIR = "#{settings.APPROOT}/public"
 //*/
 
 // Settings for updating %libraryName%
-settings.UPDATEVERSION: "%version%"
+settings.UPDATEVERSION = "%version%"
 
 // Connection info
 settings.HOST = :localhost
