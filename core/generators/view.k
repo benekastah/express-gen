@@ -23,7 +23,7 @@ module.exports = (args) -> {
   sys.puts "Creating file #{target}"
   err = lib.renderToFile! template, target, {
     name: args[1],
-    filePath: target,
+    filePath: target.replace(settings.APPROOT, ''),
   }
 
   if err, console.error "Error writing to \"#{target}\": #{err}"
