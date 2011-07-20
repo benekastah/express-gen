@@ -15,7 +15,9 @@ module.exports = (args) -> {
   }
   
   template = "#{settings.APPROOT}/core/templates/view.jade.template"
-  targetDir = "#{settings.APPROOT}/mvc/views/#{viewDir}"
+  shortTargetDir = "mvc/views/#{viewDir}"
+  targetDir = "#{settings.APPROOT}/#{shortTargetDir}"
+  shortTarget = "#{shortTargetDir}/#{viewName}.jade"
   target = path.normalize "#{targetDir}/#{viewName}.jade"
 
   lib.bash.exec! "mkdir -p #{targetDir}"
@@ -23,7 +25,7 @@ module.exports = (args) -> {
   sys.puts "Creating file #{target}"
   err = lib.renderToFile! template, target, {
     name: args[1],
-    filePath: target.replace(settings.APPROOT, ''),
+    filePath: shortTarget,
   }
 
   if err, console.error "Error writing to \"#{target}\": #{err}"
