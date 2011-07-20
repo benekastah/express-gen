@@ -28,6 +28,7 @@ checkoutItem = project[1];
   fileConfig = {}
   fileConfig[versionKey] = checkoutItem
   fileConfig.appName = project
+  fileConfig.projectDir = projectDir
   lib.setUpInitialFiles(fileConfig)
 }
 
