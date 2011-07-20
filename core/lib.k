@@ -191,7 +191,7 @@ exports.bash = {
 var path = require('path');
 var fs = require('fs');
 
-exports.mkdirP = function (p, mode, f) {
+exports.mkdirP = (p, mode=664, f) -> {
     // See https://gist.github.com/707661
     var cb = f || function () {};
     if (p.charAt(0) != '/') { cb('Relative path: ' + p); return }

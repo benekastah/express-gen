@@ -4,13 +4,13 @@ fs = require :fs
 settings = require :settings
 
 module.exports = (args) -> {
-  viewName = args[0]
+  viewName = args[1]
   
   template = "#{settings.APPROOT}/core/templates/view.jade.template"
   targetDir = "#{settings.APPROOT}/mvc/views/#{viewName}"
   target = "#{targetDir}.jade"
 
-  lib.mkdirP! targetDir, 755
+  lib.mkdirP! targetDir, null
   
   sys.puts "Creating file #{target}"
   err = lib.renderToFile! template, target, {
