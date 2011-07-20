@@ -2,13 +2,21 @@ lib = require("../lib")
 sys = require :sys
 fs = require :fs
 settings = require :settings
+path = require :path
 
 module.exports = (args) -> {
-  viewName = args[1]
+  tmp = args[1].split '/'
+  viewDir = tmp[0]
+  viewName = tmp[1]
+
+  if !viewName {
+    viewName = viewDir
+    viewDir = ''
+  }
   
   template = "#{settings.APPROOT}/core/templates/view.jade.template"
-  targetDir = "#{settings.APPROOT}/mvc/views/#{viewName}"
-  target = "#{targetDir}.jade"
+  targetDir = "#{settings.APPROOT}/mvc/views/#{viewDir}"
+  target = path.normalize "#{targetDir}/#{viewName}.jade"
 
   lib.mkdirP! targetDir, null
   
