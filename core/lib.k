@@ -215,7 +215,7 @@ exports.setUpInitialFiles = (config) -> {
     appName: config.appName,
   }
 
-  require("#{config.projectDir}/core/generators/view")(["home/index"])
+  require("#{config.projectDir}/core/generators/view")([null, "home/index"])
 
 
   //--------------------------------------------------------------------------
