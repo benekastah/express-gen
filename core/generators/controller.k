@@ -4,13 +4,16 @@ path = require :path
 lib = require "../lib"
 
 module.exports = (args) -> {
+  controllerClassName = lib.lowerCaseToCamel(args[1], true)
+  modelName = lib.camelCaseToLower(controllerClassName)
+  
   template = "core/templates/controller.k.template"
   targetFile = "mvc/controllers/#{modelName}_controller.k"
 
   sys.puts "Creating file #{targetFile}..."
   err = lib.renderToFile! template, targetFile, {
-    controllerClassName: lib.lowerCaseToCamel(args[1], true),
-    modelName: lib.camelCaseToLower(controllerClassName),
+    controllerClassName: controllerClassName,
+    modelName: modelName,
   }
 
   if err, console.error "Error writing to file: #{err}"

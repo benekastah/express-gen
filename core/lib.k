@@ -196,6 +196,8 @@ exports.setUpInitialFiles = (config) -> {
     appName: config.appName,
   }
 
+  require("#{settings.APPROOT}/core/generators/view")(["home/index"])
+
 
   //--------------------------------------------------------------------------
 
