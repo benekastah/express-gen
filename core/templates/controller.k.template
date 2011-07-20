@@ -16,25 +16,3 @@ class %controllerClassName% extends ApplicationController {
 
 module.exports = new %controllerClassName%()
 
-
-/*
-
-
-helpers = require :helpers
-ApplicationController = helpers.get_controller :application
-
-class Home extends ApplicationController {
-  @home = helpers.get_model("home")
-
-  @initialize = -> {
-    @name = :home
-    super()
-  }
-   
-  @index = -> {
-    //console.log @
-    @render @index
-  }
-}
-
-module.exports = new Home()
