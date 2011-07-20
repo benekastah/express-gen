@@ -5,12 +5,36 @@ class %controllerClassName% extends ApplicationController {
   @%modelName% = helpers.get_model("%modelName%")
 
   @initialize = -> {
+    @name = "%modelName%"
     super()
   }
 
   @index = -> {
-    @render @index
+    @render @index.view
   }
 }
 
 module.exports = new %controllerClassName%()
+
+
+/*
+
+
+helpers = require :helpers
+ApplicationController = helpers.get_controller :application
+
+class Home extends ApplicationController {
+  @home = helpers.get_model("home")
+
+  @initialize = -> {
+    @name = :home
+    super()
+  }
+   
+  @index = -> {
+    //console.log @
+    @render @index
+  }
+}
+
+module.exports = new Home()
