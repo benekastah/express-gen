@@ -10,7 +10,7 @@ module.exports = (args) -> {
   targetDir = "#{settings.APPROOT}/mvc/views/#{viewName}"
   target = "#{targetDir}.jade"
 
-  fs.mkdir! targetDir, 755
+  lib.mkdirP! targetDir, 755
   
   sys.puts "Creating file #{target}"
   err = lib.renderToFile! template, target, {
