@@ -22,7 +22,7 @@ module.exports = (args) -> {
   
   sys.puts "Creating file #{target}"
   err = lib.renderToFile! template, target, {
-    viewName: viewName,
+    viewName: args[1],
     filePath: target,
   }
 
