@@ -1,8 +1,11 @@
+lib = require("../lib")
+sys = require :sys
+
 module.exports = (args) -> {
   viewName = args[0]
   
   template = "core/templates/view.jade.template"
-  target = "mvc/views/#{viewName}.jade
+  target = "mvc/views/#{viewName}.jade"
 
   sys.puts "Creating file #{target}"
   err = lib.renderToFile! template, target, {

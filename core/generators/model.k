@@ -1,6 +1,4 @@
-fs = require :fs
 sys = require :sys
-path = require :path
 lib = require "../lib"
 
 module.exports = (args) -> {
