@@ -68,46 +68,51 @@ exports.render = (template, replacements, _return) -> {
   err, text = fs.readFile! template, :utf8
   if err {
     console.log err
-    if _return, _return err, null
+    if _return, _return err
     return
   }
-  console.log text
+  //console.log text
   t = new exports.GenTemplate {
     text: text,
     replacements: replacements || {}
   }
+
+  console.log template
   if _return
     _return null, t.render()
 }
 
 exports.renderToFile = (template, targetFile, replacements, _return) -> {
-  err, fileText = exports.render! template, replacements
+  err, fileText = exports.render!(template, replacements)
   if err {
     console.log err
     if _return, _return err
     return
   }
 
-  err = exports.writeFile! targetFile, fileText
+  err = fs.writeFile! targetFile, fileText
   console.log err
   if _return
     _return err
 }
 
-exports.writeFile = (file, data, _return) -> {
-   file = "#{settings.APPROOT}/#{file}"
-   err, exists = path.exists! file
-   if (err) { _return err; return }
-   
-   if not exists {
-      wStream = fs.createWriteStream file, { mode: 0755 }
-      wStream.addListener :error, (err) -> {
-         _return err
-      }
-      
-      if wStream.write(data)
-         _return true
-   }
+exports.writeFile = (file, data, _return = emptyFn) -> {
+  file = "#{settings.APPROOT}/#{file}"
+  err, exists = path.exists! file
+  if (err) { _return err; return }
+
+  if not exists {
+    wStream = fs.createWriteStream file, { mode: 0755 }
+    wStream.addListener :error, (err) -> {
+      _return err
+    }
+
+    if wStream.write(data)
+      _return true
+  } else {
+    err = fs.writeFile! file, data
+    if !err, _return true
+  }
 }
 
 var array = []
@@ -185,7 +190,7 @@ exports.bash = {
 
 exports.setUpInitialFiles = (config) -> {
 
-  err = makeFileFromTemplate "settings.k.template", :config, {
+  makeFileFromTemplate "settings.k.template", :config, {
     libraryName: meInfo.projectName,
     version: config[meInfo.projectName + "-version"],
     appName: config.appName,
