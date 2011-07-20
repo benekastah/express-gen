@@ -2,11 +2,15 @@ helpers = require :helpers
 ApplicationController = helpers.get_controller :application
 
 class %controllerClassName% extends ApplicationController {
-   @%modelName% = helpers.get_model("%modelName%")
-   
-   @index = -> {
-      @render @index
-   }
+  @%modelName% = helpers.get_model("%modelName%")
+
+  @initialize = -> {
+    super()
+  }
+
+  @index = -> {
+    @render @index
+  }
 }
 
 module.exports = new %controllerClassName%()
