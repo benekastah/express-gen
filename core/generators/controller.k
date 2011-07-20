@@ -5,8 +5,8 @@ module.exports = (args) -> {
   controllerClassName = lib.lowerCaseToCamel(args[1], true)
   modelName = lib.camelCaseToLower(controllerClassName)
   
-  template = "core/templates/controller.k.template"
-  targetFile = "mvc/controllers/#{modelName}_controller.k"
+  template = "#{settings.APPROOT}/core/templates/controller.k.template"
+  targetFile = "#{settings.APPROOT}/mvc/controllers/#{modelName}_controller.k"
 
   sys.puts "Creating file #{targetFile}..."
   err = lib.renderToFile! template, targetFile, {
