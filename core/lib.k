@@ -197,7 +197,7 @@ exports.setUpInitialFiles = (config) -> {
     appName: config.appName,
   }
 
-  require("#{settings.APPROOT}/core/generators/view")(["home/index"])
+  require("#{config.projectDir}/core/generators/view")(["home/index"])
 
 
   //--------------------------------------------------------------------------
@@ -212,13 +212,13 @@ exports.setUpInitialFiles = (config) -> {
   }
 
   function getTemplatePath(templateName) {
-    return "#{settings.APPROOT}/core/templates/#{templateName}"
+    return "#{config.projectDir}/core/templates/#{templateName}"
   }
 
   function getTargetPath(path, templateName) {
     path = path.replace /\//, ''
     targetName = templateName.replace /\.template/, '';
-    return "#{settings.APPROOT}/#{path}/#{targetName}"
+    return "#{config.projectDir}/#{path}/#{targetName}"
   }
 
   return
