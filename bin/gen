@@ -6,7 +6,7 @@ var lib = require("../core/lib"),
 sys = require("sys");
 
 var clArgs = new lib.ArgumentList(process.argv, 2);
-var command = clArgs[0].name;
+var command = clArgs[0];
 
 generate(command);
 

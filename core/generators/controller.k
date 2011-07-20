@@ -1,5 +1,6 @@
 sys = require :sys
 lib = require "../lib"
+settings = require :settings
 
 module.exports = (args) -> {
   controllerClassName = lib.lowerCaseToCamel(args[1], true)
