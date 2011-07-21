@@ -6,8 +6,8 @@ path = require :path
 
 module.exports = (args) -> {
   tmp = args[1].split '/'
-  viewDir = tmp[0]
-  viewName = tmp[1]
+  viewDir = lib.camelCaseToLower tmp[0]
+  viewName = lib.camelCaseToLower tmp[1]
 
   if !viewName {
     viewName = viewDir
