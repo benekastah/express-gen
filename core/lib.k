@@ -16,7 +16,7 @@ exports.camelCaseToLower = (string) -> {
       else
          ret += item
    }
-   return ret;
+   return ret.replace /_+/, '_'
 }
 
 exports.lowerCaseToCamel = (string, capitalizeFirstLetter) -> {
