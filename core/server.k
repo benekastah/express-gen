@@ -2,6 +2,7 @@
 express = require :express
 fugue = require :fugue
 settings = require :settings
+helpers = require :helpers
 routes = require :routes
 env_config = require :environment_config
 
@@ -45,27 +46,38 @@ setUpEnvironment = (server) -> {
 }
 
 setUpRoutes = (server) -> {
-   for i, item in routes {
-      {
-         method = item[0]
-         route = item[1]
-         action = item[2]
+for i, item in routes {
+  {
+    method = item[0]
+    route = item[1]
+    action = item[2]
 
-         server[method] route, (req, res) -> {
-            out = typeof action is :function ? action() : action
+    server[method] route, (req, res) -> {
+      type = typeof action
+      if type is :string {
+        tmp = action.split '#'
+        controllerName = tmp[0]
+        actionName = tmp[1]
 
-            if out.constructor is Object {
-               if out.layout == null
-                  out.locals.layout = "layouts/application"
-               else
-                  out.locals.layout = "layouts/#{out.layout}"
+        controller = helpers.get_controller controllerName
+        out = controller[actionName]()
+      } else if type is :function
+        out = action()
+      else
+        out = action
 
-               res.render out.view, out.locals
-            } else
-               res.send out
-         }
-      }
-   }
+      if out.constructor is Object {
+        if out.layout == null
+          out.locals.layout = "layouts/application"
+        else
+          out.locals.layout = "layouts/#{out.layout}"
+
+        res.render out.view, out.locals
+      } else
+        res.send out
+    }
+  }
+}
 }
 
 // Kick off the server!!

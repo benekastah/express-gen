@@ -1,3 +1,5 @@
 #!/usr/bin/env node
 
-require("../core/app");
+process.chdir(__dirname);
+require("kaffeine");
+require("../core/server");
