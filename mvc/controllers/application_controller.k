@@ -4,7 +4,8 @@ class ApplicationController {
    @initialize = -> {
       for i, item in @ {
          if typeof item === :function {
-            item.view = "#{@name}/#{i}"
+            @[i] = item.bind @ // Temp fix for a wierd scope problem
+            @[i].view = "#{@name}/#{i}"
          }
       }
       
