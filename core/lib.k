@@ -11,7 +11,7 @@ exports.camelCaseToLower = (string) -> {
    ret = '';
    for item, i of string {
       if i is 0, ret += item.toLowerCase()
-      else if item.toUpperCase() is item
+      else if !/\d/.test(item) and item.toUpperCase() is item
          ret += '_' + item.toLowerCase()
       else
          ret += item
