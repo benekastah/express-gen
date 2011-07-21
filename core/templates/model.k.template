@@ -3,9 +3,10 @@ helpers = require(:helpers)
 ApplicationModel = helpers.get_model :application
 
 class %modelClassName% extends ApplicationModel {
-   @initialize = -> {
-      super({ name: "%modelName%" })
-   }
+  @initialize = -> {
+    @name = "%modelName%"
+    super
+  }
 }
 
 module.exports = new %modelClassName%()

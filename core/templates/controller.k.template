@@ -2,8 +2,6 @@ helpers = require :helpers
 ApplicationController = helpers.get_controller :application
 
 class %controllerClassName% extends ApplicationController {
-  @%modelName% = helpers.get_model("%modelName%")
-
   @initialize = -> {
     @name = "%modelName%"
     super()

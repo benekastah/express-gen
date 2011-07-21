@@ -3,7 +3,7 @@ CouchModel = require(:couch_model) dbConfig
 
 class ApplicationModel extends CouchModel {
    
-   //@initialize = -> { super }
+   //@initialize = -> { super { name: @name } }
    
    /*
    * All models inherit from this class.

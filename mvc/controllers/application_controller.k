@@ -7,6 +7,10 @@ class ApplicationController {
             item.view = "#{@name}/#{i}"
          }
       }
+      
+      try {
+        @[@name] = helpers.get_model @name
+      } catch (e) { /* No model */ }
    }
    
    @render = (view, locals, layout) -> {
